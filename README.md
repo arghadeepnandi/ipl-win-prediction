@@ -76,8 +76,6 @@ The model uses advanced machine learning algorithms to analyze these factors and
 Try out the live prediction model here:  
 👉 **[IPL Win Probability Predictor](https://huggingface.co/spaces/Arghadeep007/ipl-win-probability)**
 
-### 📸 Screenshots
-![Demo Screenshot](https://via.placeholder.com/800x400?text=Add+Your+Screenshot+Here)
 
 ---
 
