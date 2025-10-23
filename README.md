@@ -4,6 +4,7 @@
 
 ![IPL](https://img.shields.io/badge/IPL-Win_Prediction-blue?style=for-the-badge&logo=cricket&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
 ![Machine Learning](https://img.shields.io/badge/Machine_Learning-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
 ![Hugging Face](https://img.shields.io/badge/🤗_Hugging_Face-FFD21E?style=for-the-badge)
 
@@ -20,11 +21,11 @@
 - [About The Project](#about-the-project)
 - [Features](#features)
 - [Built With](#built-with)
-- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Model Details](#model-details)
 - [Dataset](#dataset)
+- [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [Contact](#contact)
 
@@ -37,22 +38,25 @@ An **IPL Match Prediction System** powered by Machine Learning that predicts the
 ### Key Prediction Factors:
 - 🏏 **Batting Team** - Current batting side
 - 🎳 **Bowling Team** - Current bowling side  
-- 🏟️ **Venue** - Match location and ground conditions
-- 🪙 **Toss Results** - Toss winner and decision
-- 📊 **Match Situation** - Current score, wickets, and overs
+- 🏟️ **Venue/City** - Match location and ground conditions
+- 🎯 **Target Score** - Total runs to chase
+- 📊 **Current Score** - Runs scored so far
+- ⏱️ **Overs Completed** - Current over progress
+- 🚫 **Wickets Lost** - Number of wickets down
 
-The model uses advanced machine learning algorithms to analyze these factors and predict match outcomes with high accuracy.
+The model calculates crucial metrics like **Current Run Rate (CRR)** and **Required Run Rate (RRR)** to predict match outcomes with high accuracy.
 
 ---
 
 ## ✨ Features
 
-- ⚡ **Real-time Predictions** - Get instant win probability predictions
-- 🎯 **High Accuracy** - Trained on extensive historical IPL data
-- 🌐 **Web Deployment** - Accessible via Hugging Face Spaces
-- 📊 **Interactive UI** - User-friendly interface for easy predictions
-- 🔄 **Live Updates** - Predictions update based on match progress
-- 📈 **Data Visualization** - Visual representation of win probabilities
+- ⚡ **Real-time Predictions** - Get instant win probability predictions during live matches
+- 🎯 **Dynamic Calculations** - Automatically computes CRR, RRR, runs left, and balls left
+- 🌐 **Web Interface** - Clean and intuitive Flask-based web application
+- 📊 **Probability Display** - Shows win percentage for both batting and bowling teams
+- 🔄 **Live Updates** - Predictions update based on current match situation
+- 🏟️ **Multi-Venue Support** - Supports 29+ IPL venues including international locations
+- 🏏 **All Teams Covered** - Includes all major IPL franchises
 
 ---
 
@@ -60,22 +64,38 @@ The model uses advanced machine learning algorithms to analyze these factors and
 
 ### Core Technologies
 - ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white) - Primary programming language
+- ![Flask](https://img.shields.io/badge/Flask-000000?style=flat&logo=flask&logoColor=white) - Web application framework
 - ![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat&logo=pandas&logoColor=white) - Data manipulation and analysis
 - ![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=flat&logo=scikit-learn&logoColor=white) - Machine learning algorithms
 - ![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat&logo=numpy&logoColor=white) - Numerical computations
 
+### Machine Learning Components
+- **OneHotEncoder** - Categorical feature encoding
+- **StandardScaler** - Feature normalization
+- **ColumnTransformer** - Feature preprocessing pipeline
+- **Pickle** - Model serialization
+
 ### Deployment
 - ![Hugging Face](https://img.shields.io/badge/Hugging_Face-FFD21E?style=flat&logo=huggingface&logoColor=black) - Model deployment platform
-- ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white) - Web application framework
 
 ---
-
-## 🚀 Demo
 
 ### 🌐 Live Application
 Try out the live prediction model here:  
 👉 **[IPL Win Probability Predictor](https://huggingface.co/spaces/Arghadeep007/ipl-win-probability)**
 
+### Supported Teams
+- Sunrisers Hyderabad
+- Mumbai Indians
+- Royal Challengers Bangalore
+- Kolkata Knight Riders
+- Kings XI Punjab
+- Chennai Super Kings
+- Rajasthan Royals
+- Delhi Capitals
+
+### Supported Venues
+29+ cities including: Hyderabad, Bangalore, Mumbai, Delhi, Chennai, Kolkata, Jaipur, Pune, Abu Dhabi, Sharjah, and more!
 
 ---
 
@@ -104,13 +124,16 @@ Try out the live prediction model here:
    pip install -r requirements.txt
    ```
 
-4. **Run the application**
+4. **Ensure model file exists**
+   Make sure `pipe.pkl` (trained model) is in the project root directory
+
+5. **Run the Flask application**
    ```bash
-   streamlit run app.py
+   python app.py
    ```
 
-5. **Open your browser**
-   Navigate to `http://localhost:8501`
+6. **Open your browser**
+   Navigate to `http://127.0.0.1:5000`
 
 ---
 
@@ -118,53 +141,71 @@ Try out the live prediction model here:
 
 ### Using the Web Interface
 
-1. Visit the [live demo](https://huggingface.co/spaces/Arghadeep007/ipl-win-probability)
-2. Select the **batting team** and **bowling team**
-3. Choose the **venue** from the dropdown
-4. Enter **toss details** (winner and decision)
-5. Input current **match situation** (runs, wickets, overs)
-6. Click **Predict** to get win probability
+1. Visit the application at `http://127.0.0.1:5000` (local) or the [live demo](https://huggingface.co/spaces/Arghadeep007/ipl-win-probability)
+2. **Select Batting Team** - Choose the team currently batting
+3. **Select Bowling Team** - Choose the team currently bowling
+4. **Select City** - Pick the venue where match is being played
+5. **Enter Target** - Input the total runs to chase
+6. **Enter Current Score** - Input runs scored by batting team
+7. **Enter Overs** - Input overs completed (e.g., 15.4)
+8. **Enter Wickets** - Input number of wickets lost
+9. Click **Predict Probability** to get results
 
-### Using the Python API
+### Example Input
+```
+Batting Team: Mumbai Indians
+Bowling Team: Chennai Super Kings
+City: Mumbai
+Target: 180
+Score: 120
+Overs: 15.0
+Wickets: 4
+```
 
-```python
-from ipl_predictor import IPLPredictor
-
-# Initialize the predictor
-predictor = IPLPredictor()
-
-# Make prediction
-result = predictor.predict(
-    batting_team='Mumbai Indians',
-    bowling_team='Chennai Super Kings',
-    venue='Wankhede Stadium',
-    toss_winner='Mumbai Indians',
-    toss_decision='bat'
-)
-
-print(f"Win Probability: {result['probability']}%")
+### Example Output
+```
+Mumbai Indians Win Probability: 65.43%
+Chennai Super Kings Win Probability: 34.57%
 ```
 
 ---
 
 ## 🧠 Model Details
 
-### Algorithm
-- **Model Type**: Logistic Regression / Random Forest Classifier
-- **Training Data**: Historical IPL matches (2008-2024)
-- **Features**: 15+ engineered features
-- **Accuracy**: ~85% on test data
+### Algorithm & Architecture
+- **Model Type**: Scikit-learn Pipeline with Logistic Regression/Random Forest
+- **Preprocessing**: 
+  - OneHotEncoder for categorical features (teams, cities)
+  - StandardScaler for numerical features
+  - ColumnTransformer for unified preprocessing
+
+### Features Used
+#### Categorical Features:
+- `batting_team` - Current batting team
+- `bowling_team` - Current bowling team
+- `city` - Match venue
+
+#### Numerical Features:
+- `runs_left` - Runs needed to win
+- `balls_left` - Balls remaining (120 - overs*6)
+- `wickets` - Wickets remaining (10 - wickets_out)
+- `total_runs_x` - Target score
+- `crr` - Current Run Rate (score/overs)
+- `rrr` - Required Run Rate ((runs_left*6)/balls_left)
 
 ### Feature Engineering
-- Team performance metrics
-- Venue-specific win rates
-- Toss impact analysis
-- Head-to-head statistics
-- Player form indicators
+The model automatically calculates:
+```python
+runs_left = target - score
+balls_left = 120 - (overs * 6)
+wickets_left = 10 - wickets_out
+crr = score / overs
+rrr = (runs_left * 6) / balls_left
+```
 
 ### Model Training Pipeline
 ```
-Data Collection → Preprocessing → Feature Engineering → Model Training → Evaluation → Deployment
+Raw Data → Feature Engineering → Preprocessing (OneHot + Scaling) → Model Training → Pickle Serialization
 ```
 
 ---
@@ -172,31 +213,90 @@ Data Collection → Preprocessing → Feature Engineering → Model Training →
 ## 📊 Dataset
 
 The model is trained on comprehensive IPL data including:
-- 📅 **Seasons**: 2008-2024
-- 🏏 **Matches**: 1000+ matches
-- 🏟️ **Venues**: All major IPL stadiums
-- 👥 **Teams**: All IPL franchises
+- 📅 **Historical Matches**: Multiple IPL seasons
+- 🏏 **Match Scenarios**: Various score situations and outcomes
+- 🏟️ **Venues**: 29+ different cities and stadiums
+- 👥 **Teams**: All major IPL franchises
+- 📈 **Features**: Team performance, venue statistics, match situation metrics
 
-**Data Sources:**
-- Official IPL statistics
+---
+
+## 📁 Project Structure
+
+```
+ipl-win-prediction/
+│
+├── app.py                 # Flask application
+├── pipe.pkl              # Trained ML model (pickle file)
+├── requirements.txt      # Python dependencies
+├── README.md            # Project documentation
+│
+├── templates/
+│   └── index.html       # Web interface template
+│
+├── static/              # CSS
+│   ├── css/
+│
+│
+└── notebooks/           # Jupyter notebooks (optional)
+    └── model_training.ipynb
+```
+
+---
+
+## 🔧 Dependencies
+
+Create a `requirements.txt` file with:
+```
+Flask==2.3.0
+pandas==2.0.0
+numpy==1.24.0
+scikit-learn==1.3.0
+pickle5==0.0.12
+```
+
+Install all dependencies:
+```bash
+pip install -r requirements.txt
+```
+
 ---
 
 ## 🤝 Contributing
 
 Contributions make the open-source community an amazing place to learn and create. Any contributions you make are **greatly appreciated**!
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### How to Contribute:
+
+1. **Fork the Project**
+2. **Create your Feature Branch**
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. **Commit your Changes**
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+4. **Push to the Branch**
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. **Open a Pull Request**
+
+### Ideas for Contribution:
+- 🎨 Improve UI/UX design
+- 📊 Add data visualizations
+- 🔄 Update team/venue lists
+- 🧪 Add unit tests
+- 📈 Improve model accuracy
+- 📝 Enhance documentation
 
 ---
 
 ## 📞 Contact
 
-**Your Name** - Arghadeep nandi 
-**email** - arghadeepnandi93@gmail.com
+**Name** - Arghadeep Nandi 
+**Email** - arghadeepnandi93@gmail.com
 
 **Project Link**: (https://github.com/arghadeepnandi/ipl-win-prediction)
 
@@ -212,10 +312,22 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 🙏 Acknowledgments
 
-- [IPL Official Website](https://www.iplt20.com/)
-- [Hugging Face Spaces](https://huggingface.co/spaces)
-- [Scikit-learn Documentation](https://scikit-learn.org/)
-- [Streamlit Documentation](https://docs.streamlit.io/)
+- [IPL Official Website](https://www.iplt20.com/) - Official IPL data source
+- [Scikit-learn Documentation](https://scikit-learn.org/) - Machine learning library
+- [Flask Documentation](https://flask.palletsprojects.com/) - Web framework
+- [Hugging Face Spaces](https://huggingface.co/spaces) - Deployment platform
+- [Kaggle IPL Datasets](https://www.kaggle.com/datasets) - Training data
+
+---
+
+## 🚀 Future Enhancements
+
+- [ ] Add player-specific statistics
+- [ ] Include weather conditions
+- [ ] Real-time score integration via API
+- [ ] Historical head-to-head analysis
+- [ ] Mobile application development
+- [ ] Multi-language support
 
 ---
 
@@ -223,6 +335,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ### ⭐ Don't forget to star this repo if you found it helpful! ⭐
 
-Made with ❤️ by [Arghadeep Nandi]
+Made with ❤️ and 🏏 by [Arghadeep Nandi]
 
 </div>
